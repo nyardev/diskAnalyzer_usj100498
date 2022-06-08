@@ -1,7 +1,7 @@
 package diskanalyzer_usj100498;
 
-import java.awt.Image;
 import java.awt.Toolkit;
+import java.nio.file.Paths;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -16,7 +16,11 @@ public class main {
 //		root.setUserObject(rootArch);
 //		rootArch.analizaCarpeta(root);
 		GUI interfaz = new GUI(root);
-	
+//		
+//		ImageIcon img = new ImageIcon("./src/res/disk_drive.png");
+//		interfaz.setIconImage(img);
+//		interfaz.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResourceAsStream(Paths.get("./src/res/disk_drive.png"))));
+		System.out.println(Paths.get("./src/res/disk_drive.png").toFile().isFile());
 		interfaz.setVisible(true);
 //		Carpeta rootArch = new Carpeta("/Users/nyara/Documents/FakeRootDiskAnalyzer");
 ////		Archivo archroot = new Archivo("/Users/nyara/Documents/FakeRootDiskAnalyzer/Document13.pdf");

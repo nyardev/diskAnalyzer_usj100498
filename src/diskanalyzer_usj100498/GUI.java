@@ -7,13 +7,13 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.SystemColor;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.nio.file.Paths;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,8 +35,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
 import net.miginfocom.swing.MigLayout;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import javax.swing.UIManager;
 
 public class GUI extends JFrame {
 	private JMenuBar menuBar;
@@ -85,13 +86,22 @@ public class GUI extends JFrame {
 		DefaultMutableTreeNode root = newRoot;
 		treeModel = new DefaultTreeModel(root);
 		Carpeta carpetaRoot = (Carpeta)root.getUserObject();
-		carpetaRoot.analizaCarpeta(root);
+		if (carpetaRoot!=null) {
+			carpetaRoot.analizaCarpeta(root);
+			
+		}
 //		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 //		root.setUserObject(rootArch);
 //		rootArch.analizaCarpeta(root);
-
+		
 		setTitle("Disk Analyzer");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.class.getResource("/res/disk_drive.png")));
+		File IconFile = Paths.get("./src/res/disk_drive.png").toFile();
+		
+		if (IconFile.exists()) {
+//			System.out.println("Lo pillo");
+			ImageIcon imgIcon = new ImageIcon("./src/res/disk_drive.png");
+			this.setIconImage(imgIcon.getImage());
+		}
 		setForeground(Color.GREEN);
 		setBackground(SystemColor.BLACK);
 		setFont(new Font("Segoe UI Black", Font.BOLD, 23));
@@ -236,6 +246,9 @@ public class GUI extends JFrame {
 		btnGroupExtensions.add(rbtnExtensionMp4);
 		btnGroupExtensions.add(rbtnShowAllExtensions);
 		tableFiles = new JTable();
+		tableFiles.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+		tableFiles.setSurrendersFocusOnKeystroke(true);
+		tableFiles.setRowSelectionAllowed(false);
 		tableFiles.setForeground(Color.GREEN);
 		tableFiles.setBackground(Color.BLACK);
 		tableFiles.setModel(updateTableModel(root));
